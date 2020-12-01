@@ -122,44 +122,44 @@ def get_membership_functions():
     return cold, normal, warm, hot, dry, wet, soaked, short, medium, long 
 
 def fuzzyfy(t, h):
-    temperature = {"cold":cold_t[t], "normal":nor_t[t], "wharm": warm_t[t], "hot":hot_t[t]}
+    temperature = {"cold":cold_t[t], "normal":nor_t[t], "warm": warm_t[t], "hot":hot_t[t]}
     clothes_humidity = {"dry":dry_h[h], "wet":wet_h[h], "soaked":soaked_h[h]}
-    return temperatura, humedad
+    return temperature, clothes_humidity
 
 def eval_rules(t, h):
     d1 = [] #long
     d2 = [] #short
     d3 = [] #medium
 
-    d1.append(min(h["seco"], t["frio"]))
-    d1.append(min(h["seco"], t["normal"]))
-    d1.append(min(h["seco"], t["tibio"]))
-    d1.append(min(h["seco"], t["caliente"]))
+    d1.append(min(h["dry"], t["cold"]))
+    d1.append(min(h["dry"], t["normal"]))
+    d1.append(min(h["dry"], t["warm"]))
+    d1.append(min(h["dry"], t["hot"]))
 
-    d2.append(min(h["mojado"], t["frio"]))
-    d2.append(min(h["mojado"], t["normal"]))
-    d2.append(min(h["mojado"], t["tibio"]))
-    d2.append(min(h["mojado"], t["caliente"]))
+    d2.append(min(h["soaked"], t["cold"]))
+    d2.append(min(h["soaked"], t["normal"]))
+    d2.append(min(h["soaked"], t["warm"]))
+    d2.append(min(h["soaked"], t["hot"]))
 
-    d3.append(min(t["frio"], h["humedo"]))
-    d3.append(min(t["normal"], h["humedo"]))
-    d3.append(min(t["tibio"], h["humedo"]))    
-    d3.append(min(t["caliente"], h["humedo"]))
+    d3.append(min(t["cold"], h["wet"]))
+    d3.append(min(t["normal"], h["wet"]))
+    d3.append(min(t["warm"], h["wet"]))    
+    d3.append(min(t["hot"], h["wet"]))
     return d2,d3,d1    
 
 
 t1 = int(input("Temperature: "))
 h1 = int(input("Clothes Humidity: "))
 x = range(100)
-fri, nor, tib, cal, seco, hum, moj, cor, med, lar  = get_membership_functions()
+cold_t, nor_t, warm_t, hot_t, dry_h, wet_h, soaked_h, short, med, long  = get_membership_functions()
 
 t, h = fuzzyfy(t1,h1)
 
 r1,r2,r3 = eval_rules(t,h)
 
 a = [max(r1), max(r2), max(r3)]
-cons = [cor, med, lar]
-
+cons = [short, med, long]
+print("Los resultados obtenidos segun las tecnicas utilizada son:")
 print("\nMamdani")
 print("Media de los maximos")
 print(mamdani(a, cons, med_max))
