@@ -8,28 +8,19 @@ from aggregation import *
 def get_membership_functions():
     x = np.arange(0,100)
     
-    #Temperatura
-    congelado = []
-    for i in x:
-        if i < -100 or i >= 13:
-            congelado.append(0)
-        if i >= -100 and i < -60:
-            congelado.append((i-(-60)/(-100-(-60))))
-        if i >= -60 and i < 0:
-            congelado.append(1)
-        if i >= 0 and i < 13:
-            congelado.append((13 -i)/13)
+    #Temperature
+    
     # Medium
-    frio = []
+    cold = []
     for i in x:
         if i < 10 or i >= 20:
-            frio.append(0)
+            cold.append(0)
         if i >= 10 and i < 15:
-            frio.append((i-10)/(15 -10))
+            cold.append((i-10)/(15 -10))
         if i >= 15 and i < 20:
-            frio.append((15 - i)/ (20-15))
+            cold.append((15 - i)/ (20-15))
 
-    # High
+    #Normal
     normal = []
     for i in x:
         if i < 15 or i >= 23:
@@ -39,107 +30,106 @@ def get_membership_functions():
         if i >= 21 and i < 23:
             normal.append((15 - i)/ (20-15))
 
-    tibio = []
+    warm = []
     for i in x:
         if i < 20 or i >= 35:
-            tibio.append(0)
+            warm.append(0)
         if i >= 20 and i < 25:
-            tibio.append((i-20)/(25 -20))
+            warm.append((i-20)/(25 -20))
         if i >= 25 and i < 35:
-            tibio.append((35 - i)/ (35-20))
+            warm.append((35 - i)/ (35-20))
 
-    caliente = []
+    hot = []
     for i in x:
         if i < 24 or i >= 100:
-            caliente.append(0)
+            hot.append(0)
         if i >= 24 and i < 44:
-            caliente.append((i-(24)/(44 -24)))
+            hot.append((i-(24)/(44 -24)))
         if i >= 44 and i < 70:
-            caliente.append(1)
+            hot.append(1)
         if i >= 70 and i < 100:
-            caliente.append((100 -i)/(100-70))
+            hot.append((100 -i)/(100-70))
     
-    #Humedad
+    #ClothesHumidity
 
-    seco = []
+    dry = []
     for i in x:
         if i < -5 or i >= 12:
-            seco.append(0)
+            dry.append(0)
         if i >= -5 and i < 1:
-            seco.append((i- (-5))/(1 - (-5)))
+            dry.append((i- (-5))/(1 - (-5)))
         if i >= 1 and i < 8:
-            seco.append(1)
+            dry.append(1)
         if i >= 8 and i < 12:
-            seco.append((12 -i)/(12-8))
+            dry.append((12 -i)/(12-8))
     
-    humedo = []
+    wet = []
     for i in x:
         if i < 8 or i >= 35:
-            humedo.append(0)
+            wet.append(0)
         if i >= 8 and i < 12:
-            humedo.append((i- 8)/(12-8))
+            wet.append((i- 8)/(12-8))
         if i >= 12 and i < 30:
-            humedo.append(1)
+            wet.append(1)
         if i >=30 and i < 35:
-            humedo.append((35 -i)/(35-30))
+            wet.append((35 -i)/(35-30))
     
-    mojado = []
+    soaked = []
     for i in x:
         if i < 20 or i >= 100:
-            mojado.append(0)
+            soaked.append(0)
         if i >= 20 and i < 40:
-            mojado.append((i- 20)/(40-20))
+            soaked.append((i- 20)/(40-20))
         if i >= 40 and i < 70:
-            mojado.append(1)
+            soaked.append(1)
         if i >= 70 and i < 100:
-            mojado.append((100 -i)/(100-70))
+            soaked.append((100 -i)/(100-70))
             
-    # tiempo regado
-    corto = []
+    # total dry time
+    short = []
     for i in x:
         if i < 0 or i >= 20:
-            corto.append(0)
+            short.append(0)
         if i >= 0 and i < 1:
-            corto.append(i)
+            short.append(i)
         if i >= 1 and i < 10:
-            corto.append(1)
+            short.append(1)
         if i >= 10 and i < 20:
-            corto.append((20 -i)/(20-10))
+            short.append((20 -i)/(20-10))
     
-    medio = []
+    medium = []
     for i in x:
         if i < 10 or i >= 55:
-            medio.append(0)
+            medium.append(0)
         if i >= 10 and i < 25:
-            medio.append((i- 10)/(25-10))
+            medium.append((i- 10)/(25-10))
         if i >= 25 and i < 38:
-            medio.append(1)
+            medium.append(1)
         if i >= 38 and i < 55:
-            medio.append((55-i)/(55-38))
+            medium.append((55-i)/(55-38))
 
-    largo = []  
+    long = []  
     for i in x:
         if i < 45 or i >= 110:
-            largo.append(0)
+            long.append(0)
         if i >= 45 and i < 60:
-            largo.append((i- 45)/(60-45))
+            long.append((i- 45)/(60-45))
         if i >= 60 and i < 90:
-            largo.append(1)
+            long.append(1)
         if i >= 90 and i < 110:
-            largo.append((110 -i)/(110-90))    
+            long.append((110 -i)/(110-90))    
             
-    return congelado, frio, normal, tibio, caliente, seco, humedo, mojado, corto, medio, largo
-
+    return cold, normal, warm, hot, dry, wet, soaked, short, medium, long 
 
 def fuzzyfy(t, h):
-    temperatura = {"congelado":cong[t], "frio":fri[t], "normal":nor[t], "tibio": tib[t], "caliente":cal[t]}
-    humedad = {"seco":seco[h], "humedo":hum[h], "mojado":moj[h]}
+    temperature = {"cold":cold_t[t], "normal":nor_t[t], "wharm": warm_t[t], "hot":hot_t[t]}
+    clothes_humidity = {"dry":dry_h[h], "wet":wet_h[h], "soaked":soaked_h[h]}
     return temperatura, humedad
 
 def eval_rules(t, h):
-    d1 = [] #regado largo
-    d2 = [] #regado corto
-    d3 = [] #regado medio
+    d1 = [] #long
+    d2 = [] #short
+    d3 = [] #medium
 
     d1.append(min(h["seco"], t["congelado"]))
     d1.append(min(h["seco"], t["frio"]))
