@@ -131,18 +131,15 @@ def eval_rules(t, h):
     d2 = [] #short
     d3 = [] #medium
 
-    d1.append(min(h["seco"], t["congelado"]))
     d1.append(min(h["seco"], t["frio"]))
     d1.append(min(h["seco"], t["normal"]))
     d1.append(min(h["seco"], t["tibio"]))
     d1.append(min(h["seco"], t["caliente"]))
 
-    d2.append(min(h["mojado"], t["congelado"]))
     d2.append(min(h["mojado"], t["frio"]))
     d2.append(min(h["mojado"], t["normal"]))
     d2.append(min(h["mojado"], t["tibio"]))
     d2.append(min(h["mojado"], t["caliente"]))
-    d2.append(min(h["humedo"], t["congelado"]))
 
     d3.append(min(t["frio"], h["humedo"]))
     d3.append(min(t["normal"], h["humedo"]))
@@ -151,10 +148,10 @@ def eval_rules(t, h):
     return d2,d3,d1    
 
 
-t1 = int(input("Temperatura: "))
-h1 = int(input("Humedad: "))
+t1 = int(input("Temperature: "))
+h1 = int(input("Clothes Humidity: "))
 x = range(100)
-cong, fri, nor, tib, cal, seco, hum, moj, cor, med, lar  = get_membership_functions()
+fri, nor, tib, cal, seco, hum, moj, cor, med, lar  = get_membership_functions()
 
 t, h = fuzzyfy(t1,h1)
 
