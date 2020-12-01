@@ -50,7 +50,7 @@ def get_membership_functions():
         if i >= 70 and i < 100:
             hot.append((100 -i)/(100-70))
     
-    #ClothesHumidity
+    #Humidity
 
     dry = []
     for i in x:
@@ -123,33 +123,33 @@ def get_membership_functions():
 
 def fuzzyfy(t, h):
     temperature = {"cold":cold_t[t], "normal":nor_t[t], "warm": warm_t[t], "hot":hot_t[t]}
-    clothes_humidity = {"dry":dry_h[h], "wet":wet_h[h], "soaked":soaked_h[h]}
-    return temperature, clothes_humidity
+    humidity = {"dry":dry_h[h], "wet":wet_h[h], "soaked":soaked_h[h]}
+    return temperature, humidity
 
 def eval_rules(t, h):
     d1 = [] #long
     d2 = [] #short
     d3 = [] #medium
 
-    d1.append(min(h["dry"], t["cold"]))
-    d1.append(min(h["dry"], t["normal"]))
-    d1.append(min(h["dry"], t["warm"]))
-    d1.append(min(h["dry"], t["hot"]))
+    d3.append(min(h["dry"], t["cold"]))
+    d2.append(min(h["dry"], t["normal"]))
+    d2.append(min(h["dry"], t["warm"]))
+    d2.append(min(h["dry"], t["hot"]))
 
-    d2.append(min(h["soaked"], t["cold"]))
-    d2.append(min(h["soaked"], t["normal"]))
-    d2.append(min(h["soaked"], t["warm"]))
-    d2.append(min(h["soaked"], t["hot"]))
+    d1.append(min(h["soaked"], t["cold"]))
+    d1.append(min(h["soaked"], t["normal"]))
+    d3.append(min(h["soaked"], t["warm"]))
+    d3.append(min(h["soaked"], t["hot"]))
 
     d3.append(min(t["cold"], h["wet"]))
     d3.append(min(t["normal"], h["wet"]))
-    d3.append(min(t["warm"], h["wet"]))    
-    d3.append(min(t["hot"], h["wet"]))
+    d2.append(min(t["warm"], h["wet"]))    
+    d2.append(min(t["hot"], h["wet"]))
     return d2,d3,d1    
 
 
 t1 = int(input("Temperature: "))
-h1 = int(input("Clothes Humidity: "))
+h1 = int(input("Humidity: "))
 x = range(100)
 cold_t, nor_t, warm_t, hot_t, dry_h, wet_h, soaked_h, short, med, long  = get_membership_functions()
 
